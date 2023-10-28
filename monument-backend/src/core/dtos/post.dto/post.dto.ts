@@ -1,10 +1,11 @@
 import { IsString, IsNotEmpty, IsDate } from 'class-validator';
+import { Category } from 'src/core/enums/category.enum';
 
 export class PostDto {
 
     @IsString()
     @IsNotEmpty()
-    category: string;
+    category: Category;
 
     @IsString()
     @IsNotEmpty()
