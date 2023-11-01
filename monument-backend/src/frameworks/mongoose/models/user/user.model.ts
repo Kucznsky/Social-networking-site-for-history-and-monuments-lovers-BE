@@ -1,4 +1,6 @@
-import { Prop } from "@nestjs/mongoose";
+import { Prop, SchemaFactory } from "@nestjs/mongoose";
+
+export type UserDocument = User & Document;
 
 export class User {
     @Prop({ required: true, unique: true })
@@ -19,3 +21,6 @@ export class User {
     @Prop({ required: true})
     isActive: boolean;
 }
+
+export const BookSchema = SchemaFactory.createForClass(User);
+

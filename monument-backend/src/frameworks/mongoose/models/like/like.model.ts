@@ -1,5 +1,7 @@
-import { Prop } from "@nestjs/mongoose";
+import { Prop, SchemaFactory } from "@nestjs/mongoose";
 import { User } from "../user/user.model";
+
+export type LikeDocument = Like & Document;
 
 export class Like {
     @Prop({ required: true, unique: true })
@@ -8,3 +10,6 @@ export class Like {
     @Prop({ required: true})
     user: User;
 }
+
+export const BookSchema = SchemaFactory.createForClass(Like);
+

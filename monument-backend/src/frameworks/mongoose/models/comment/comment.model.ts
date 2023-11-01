@@ -1,8 +1,10 @@
-import { Prop } from "@nestjs/mongoose";
+import { Prop, SchemaFactory } from "@nestjs/mongoose";
 import { Post } from "../post/post.model";
 import { User } from "../user/user.model";
 
-export class CommentModel {
+export type CommentDocument = Comment & Document;
+
+export class Comment {
     @Prop({ required: true, unique: true })
     id: string;
 
@@ -18,3 +20,5 @@ export class CommentModel {
     @Prop({ required: true})
     content: string;
 }
+
+export const BookSchema = SchemaFactory.createForClass(Comment);

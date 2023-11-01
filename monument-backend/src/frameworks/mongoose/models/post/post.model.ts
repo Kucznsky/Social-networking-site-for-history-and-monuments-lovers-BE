@@ -1,6 +1,8 @@
 import { Category } from "src/core/enums/category.enum";
 import { User } from "../user/user.model";
-import { Prop } from "@nestjs/mongoose";
+import { Prop, SchemaFactory } from "@nestjs/mongoose";
+
+export type PostDocument = Post & Document;
 
 export class Post {
     @Prop({ required: true, unique: true })
@@ -30,3 +32,6 @@ export class Post {
     // @Prop()
     // // comments: Comment[]
 }
+
+export const BookSchema = SchemaFactory.createForClass(Post);
+
