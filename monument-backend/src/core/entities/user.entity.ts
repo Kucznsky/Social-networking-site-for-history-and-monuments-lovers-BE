@@ -5,4 +5,5 @@ export class User {
     dateOfJoining: Date;
     isStaff: boolean;
     isActive: boolean;
+    //profilePicture
 }

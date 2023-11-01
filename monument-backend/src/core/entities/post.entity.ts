@@ -14,4 +14,7 @@ export class Post {
     author: User
     likes: Like[]
     comments: Comment[]
+
+    //modernPictures
+    //oldPictures
 }
