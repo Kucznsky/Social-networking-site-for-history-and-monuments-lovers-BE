@@ -1,6 +1,9 @@
 import { IsBoolean, IsDate, IsNotEmpty, IsString } from "class-validator";
 
 export class UserDto {
+    @IsNotEmpty()
+    id: string
+
     @IsString()
     @IsNotEmpty()
     category: string;
