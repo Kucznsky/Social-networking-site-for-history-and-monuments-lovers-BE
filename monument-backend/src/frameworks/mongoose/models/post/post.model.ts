@@ -33,5 +33,5 @@ export class Post {
     // // comments: Comment[]
 }
 
-export const BookSchema = SchemaFactory.createForClass(Post);
+export const PostSchema = SchemaFactory.createForClass(Post);
 

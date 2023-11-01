@@ -21,4 +21,4 @@ export class Comment {
     content: string;
 }
 
-export const BookSchema = SchemaFactory.createForClass(Comment);
+export const CommentSchema = SchemaFactory.createForClass(Comment);

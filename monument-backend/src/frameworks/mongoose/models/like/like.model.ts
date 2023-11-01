@@ -11,5 +11,5 @@ export class Like {
     user: User;
 }
 
-export const BookSchema = SchemaFactory.createForClass(Like);
+export const LikeSchema = SchemaFactory.createForClass(Like);
 

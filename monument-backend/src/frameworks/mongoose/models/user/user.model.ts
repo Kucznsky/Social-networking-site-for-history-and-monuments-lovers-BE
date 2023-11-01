@@ -22,5 +22,5 @@ export class User {
     isActive: boolean;
 }
 
-export const BookSchema = SchemaFactory.createForClass(User);
+export const UserSchema = SchemaFactory.createForClass(User);
 

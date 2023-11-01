@@ -12,8 +12,8 @@ export class Post {
     localisation: string;
     published: Date;
     author: User
-    likes: Like[]
-    comments: Comment[]
+    // likes: Like[]
+    // comments: Comment[]
 
     //modernPictures
     //oldPictures
