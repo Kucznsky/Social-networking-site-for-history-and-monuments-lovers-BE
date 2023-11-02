@@ -1,8 +1,8 @@
 import { Controller, Body, Post } from '@nestjs/common';
 import { CreatePostResponseDto } from 'src/core/dtos/create-post-response.dto/create-post-response.dto';
 import { PostDto } from 'src/core/dtos/post.dto/post.dto';
-import { PostFactoryService } from 'src/use_cases/post.use-case/post-factory/post-factory.service';
-import { PostUseCase } from 'src/use_cases/post.use-case/post.use-case';
+import { PostFactoryService } from 'src/use_cases/post/post-factory/post-factory.service';
+import { PostUseCase } from 'src/use_cases/post/post.use-case';
 
 @Controller('post')
 export class PostController {
