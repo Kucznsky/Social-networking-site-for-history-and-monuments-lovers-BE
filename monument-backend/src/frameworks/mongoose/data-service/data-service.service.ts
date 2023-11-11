@@ -2,11 +2,11 @@ import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { IDataServices } from 'src/core/abstracts/data-service.abstract';
 import { User, UserDocument } from '../models/user/user.model';
 import { Post, PostDocument } from '../models/post/post.model';
+import { Comment, CommentDocument } from '../models/comment/comment.model';
+import { Like, LikeDocument } from '../models/like/like.model';
 import { MongoGenericRepository } from '../mongo-generic-repository/mongo-generic-repository';
 import { InjectModel } from '@nestjs/mongoose';
-import { Like, LikeDocument } from '../models/like/like.model';
 import { Model } from 'mongoose';
-import { Comment, CommentDocument } from '../models/comment/comment.model';
 
 @Injectable()
 export class DataService implements IDataServices, OnApplicationBootstrap  {
@@ -16,10 +16,10 @@ export class DataService implements IDataServices, OnApplicationBootstrap  {
     likes: MongoGenericRepository<Like>;
   
     constructor(
-      @InjectModel(User.name)
-      private UserRepository: Model<UserDocument>,
       @InjectModel(Post.name)
       private PostRepository: Model<PostDocument>,
+      @InjectModel(User.name)
+      private UserRepository: Model<UserDocument>,
       @InjectModel(Comment.name)
       private CommentRepository: Model<CommentDocument>,
       @InjectModel(Like.name)
