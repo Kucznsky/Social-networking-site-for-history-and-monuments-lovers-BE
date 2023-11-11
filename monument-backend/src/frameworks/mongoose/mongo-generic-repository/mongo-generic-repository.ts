@@ -23,10 +23,10 @@ export class MongoGenericRepository<T> implements IGenericRepository<T> {
     }
   
     update(id: string, item: T) {
-      return this.model.findByIdAndUpdate(id, item);
+      return this.model.findByIdAndUpdate(id, item).exec();
     }
 
     delete(id: string) {
-        return this.model.findByIdAndDelete(id);
+        return this.model.findByIdAndDelete(id).exec();
     }
   }
