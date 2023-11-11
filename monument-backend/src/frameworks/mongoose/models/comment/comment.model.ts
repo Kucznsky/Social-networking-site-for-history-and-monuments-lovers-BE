@@ -1,9 +1,10 @@
-import { Prop, SchemaFactory } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Post } from "../post/post.model";
 import { User } from "../user/user.model";
 
 export type CommentDocument = Comment & Document;
 
+@Schema()
 export class Comment {
     @Prop({ required: true, unique: true })
     id: string;

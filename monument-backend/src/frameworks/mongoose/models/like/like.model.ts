@@ -1,8 +1,9 @@
-import { Prop, SchemaFactory } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { User } from "../user/user.model";
 
 export type LikeDocument = Like & Document;
 
+@Schema()
 export class Like {
     @Prop({ required: true, unique: true })
     id: string;
