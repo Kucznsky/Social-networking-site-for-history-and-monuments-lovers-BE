@@ -1,6 +1,9 @@
 import { Category } from "src/core/enums/category.enum";
 import { User } from "../user/user.model";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import mongoose from "mongoose";
+import { Like } from "../like/like.model";
+import { Comment } from "../comment/comment.model";
 
 export type PostDocument = Post & Document;
 
@@ -24,14 +27,14 @@ export class Post {
     @Prop()
     published: Date;
 
-    @Prop({ required: true})
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true})
     author: User
 
-    // @Prop()
-    // // likes: Like[]
+    @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Like'}])
+    likes: Like[]
 
-    // @Prop()
-    // // comments: Comment[]
+    @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}])
+    comments: Comment[]
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);
