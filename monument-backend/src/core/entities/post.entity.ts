@@ -4,7 +4,6 @@ import { User } from "./user.entity";
 import { Comment } from "./comment.entity";
 
 export class Post {
-    id: string;
     category: Category;
     title: string;
     content: string;

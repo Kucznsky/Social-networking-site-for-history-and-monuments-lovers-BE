@@ -9,9 +9,6 @@ export type PostDocument = Post & Document;
 
 @Schema()
 export class Post {
-    @Prop({ required: true, unique: true })
-    id: string;
-
     @Prop({ required: true})
     category: Category;
 

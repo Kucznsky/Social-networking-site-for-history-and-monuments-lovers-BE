@@ -1,8 +1,9 @@
-import { Controller, Body, Post } from '@nestjs/common';
-import { CreatePostResponseDto } from 'src/core/dtos/create-post-response.dto/create-post-response.dto';
-import { PostDto } from 'src/core/dtos/post.dto/post.dto';
+import { Controller, Body, Post, Put, Param, Get } from '@nestjs/common';
+import { CreatePostResponseDto } from '../../core/dtos/post/create-post-response.dto/create-post-response.dto';
+import { CreatedPostDto } from 'src/core/dtos/post/created-post.dto';
 import { PostFactoryService } from 'src/use_cases/post/post-factory/post-factory.service';
 import { PostUseCase } from 'src/use_cases/post/post.use-case';
+import { EditedPostDto } from 'src/core/dtos/post/edited-post.dto';
 
 @Controller('post')
 export class PostController {
@@ -12,7 +13,7 @@ export class PostController {
       ) {}
 
     @Post()
-    async createPost(@Body() postDto: PostDto) {
+    async createPost(@Body() postDto: CreatedPostDto) {
         const createdPostResponse = new CreatePostResponseDto();
         try {
             const post = this.postFactoryService.createPost(postDto)
@@ -25,5 +26,21 @@ export class PostController {
         }
 
         return createdPostResponse;
+    }
+
+    // @Put(':id')
+    // async editPost(@Param('id') postId: string, @Body() Post: EditedPostDto) {
+    //     const editedPost = this.postFactoryService.editPost(postDto)
+    //     this.postServices.
+    // }
+
+    @Get('all')
+    async getAllPosts() {
+        return this.postServices.getAllPosts();
+    }
+
+    @Get(':id')
+    async getPost(@Param('id') postId: string) {
+        return this.postServices.getPost(postId);
     }
 }

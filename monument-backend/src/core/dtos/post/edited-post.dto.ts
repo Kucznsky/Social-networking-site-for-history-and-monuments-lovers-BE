@@ -1,20 +1,14 @@
 import { IsString, IsNotEmpty } from 'class-validator';
 import { Category } from 'src/core/enums/category.enum';
 
-export class PostDto {
+export class EditedPostDto {
     @IsString()
-    @IsNotEmpty()
     category: Category;
 
     @IsString()
-    @IsNotEmpty()
     title: string;
     
     @IsString()
-    @IsNotEmpty()
     content: string;
     localisation: string;
-
-    @IsNotEmpty()
-    authorId: any;
 }
