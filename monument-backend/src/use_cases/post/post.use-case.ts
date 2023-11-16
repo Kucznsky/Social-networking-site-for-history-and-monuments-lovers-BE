@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 // import { ICRMServices } from "src/core/abstracts/crm-service.abstract";
 import { IDataServices } from "src/core/abstracts/data-service.abstract";
-import { EditedPostDto } from "src/core/dtos/post/edited-post.dto";
 import { Post } from "src/core/entities/post.entity";
 
 @Injectable()
@@ -24,18 +23,16 @@ export class PostUseCase {
         }
       }
 
-      // async editPost(postId: string, post: Post): Promise<Post>{
-      //   try{
-      //       const createdPost = await this.dataServices.posts.update(postId, post);
-      //       // console.log(createdPost);
-      //       // await this.crmServices.postAdded(createdPost)
+      async editPost(postId: string, post: Post): Promise<Post>{
+        try{
+            const editedPost = await this.dataServices.posts.update(postId, post);
             
-      //       return createdPost; 
-      //   } catch (error) {
-      //       console.log(error)
-      //       throw error;
-      //   }
-      // }
+            return editedPost; 
+        } catch (error) {
+            console.log(error)
+            throw error;
+        }
+      }
 
       async getAllPosts(): Promise<Post[]> {
         try {
@@ -55,5 +52,9 @@ export class PostUseCase {
           console.log(error)
           throw error;
         }
+      }
+
+      async deletePost(id: string) {
+        return this.dataServices.posts.delete(id)
       }
 }

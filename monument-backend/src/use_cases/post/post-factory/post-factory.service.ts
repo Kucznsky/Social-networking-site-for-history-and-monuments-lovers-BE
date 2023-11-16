@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CreatedPostDto } from 'src/core/dtos/post/created-post.dto';
-import { EditedPostDto } from 'src/core/dtos/post/edited-post.dto';
+import { PostDto } from 'src/core/dtos/post/post.dto';
+import { PostListItemDto } from 'src/core/dtos/post/posts-list-item.dto';
 import { Post } from 'src/core/entities/post.entity';
-import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class PostFactoryService {
-    public createPost(postDto: CreatedPostDto): Post {
+    public createPostObject(postDto: PostDto): Post {
         const post = new Post();
         post.title = postDto.title;
         post.author = postDto.authorId;
@@ -17,9 +16,28 @@ export class PostFactoryService {
         return post
     }
 
-    public editPost(postDto: EditedPostDto): Post {
-        const post = new Post();
-        Object.keys(postDto).forEach((key)=> {if(key){key.valueOf}})
-        return post
+    public async createListOfPostDtos(postList: Promise<Post[]>): Promise<PostListItemDto[]> {
+        let postListDto: PostListItemDto[]
+        postList.then((postList)=> {
+            postListDto = postList.map((post)=>{
+                let postListItem = new PostListItemDto;
+                postListItem.title = post.title;
+                postListItem.category = post.category;
+                postListItem.localisation = post.category;
+                postListItem.numberOfLikes = post.likes.length;
+                postListItem.numberOfComments = post.comments.length;
+                return postListItem 
+            })
+        })
+        // const postListDto = postList.map((post)=>{
+        //     let postListItem = new PostListItemDto;
+        //     postListItem.title = post.title;
+        //     postListItem.category = post.category;
+        //     postListItem.localisation = post.category;
+        //     postListItem.numberOfLikes = post.likes.length;
+        //     postListItem.numberOfComments = post.comments.length;
+        //     return postListItem
+        // });
+        return await postListDto;
     }
 }

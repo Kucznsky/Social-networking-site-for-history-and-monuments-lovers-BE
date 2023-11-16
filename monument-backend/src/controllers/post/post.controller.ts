@@ -1,9 +1,9 @@
-import { Controller, Body, Post, Put, Param, Get } from '@nestjs/common';
-import { CreatePostResponseDto } from '../../core/dtos/post/create-post-response.dto/create-post-response.dto';
-import { CreatedPostDto } from 'src/core/dtos/post/created-post.dto';
+import { Controller, Body, Post, Put, Param, Get, Delete } from '@nestjs/common';
+import { CreatePostResponseDto } from '../../core/dtos/post/create-post-response.dto';
+import { PostDto } from 'src/core/dtos/post/post.dto';
 import { PostFactoryService } from 'src/use_cases/post/post-factory/post-factory.service';
 import { PostUseCase } from 'src/use_cases/post/post.use-case';
-import { EditedPostDto } from 'src/core/dtos/post/edited-post.dto';
+import { EditPostResponseDto } from 'src/core/dtos/post/edit-post-response.dto';
 
 @Controller('post')
 export class PostController {
@@ -13,11 +13,11 @@ export class PostController {
       ) {}
 
     @Post()
-    async createPost(@Body() postDto: CreatedPostDto) {
+    async createPost(@Body() postDto: PostDto) {
         const createdPostResponse = new CreatePostResponseDto();
         try {
-            const post = this.postFactoryService.createPost(postDto)
-            const createdPost = await this.postServices.createPost(post)
+            const post = this.postFactoryService.createPostObject(postDto);
+            const createdPost = await this.postServices.createPost(post);
 
             createdPostResponse.createdPost = createdPost;
             createdPostResponse.success = true;
@@ -28,19 +28,33 @@ export class PostController {
         return createdPostResponse;
     }
 
-    // @Put(':id')
-    // async editPost(@Param('id') postId: string, @Body() Post: EditedPostDto) {
-    //     const editedPost = this.postFactoryService.editPost(postDto)
-    //     this.postServices.
-    // }
+    @Put(':id')
+    async editPost(@Param('id') postId: string, @Body() postDto: PostDto) {
+        const editedPostResponse = new EditPostResponseDto();
+        try {
+            const post = this.postFactoryService.createPostObject(postDto);
+            const editedPost = await this.postServices.editPost(postId, post);
+
+            editedPostResponse.createdPost = editedPost;
+            editedPostResponse.success = true;
+        } catch (error) {
+            editedPostResponse.success = false;
+        }
+        return editedPostResponse;
+    }
 
     @Get('all')
-    async getAllPosts() {
+    getAllPosts() {
         return this.postServices.getAllPosts();
     }
 
     @Get(':id')
     async getPost(@Param('id') postId: string) {
         return this.postServices.getPost(postId);
+    }
+
+    @Delete(':id')
+    async deletePost(@Param('id') postId: string) {
+        return this.postServices.deletePost(postId)
     }
 }

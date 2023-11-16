@@ -1,7 +1,7 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, isNotEmpty, IsNumber } from 'class-validator';
 import { Category } from 'src/core/enums/category.enum';
 
-export class CreatedPostDto {
+export class PostListItemDto {
     @IsString()
     @IsNotEmpty()
     category: Category;
@@ -12,9 +12,13 @@ export class CreatedPostDto {
     
     @IsString()
     @IsNotEmpty()
-    content: string;
     localisation: string;
 
+    @IsNumber()
     @IsNotEmpty()
-    authorId: any;
+    numberOfLikes: number;
+
+    @IsNumber()
+    @IsNotEmpty()
+    numberOfComments: number;
 }
