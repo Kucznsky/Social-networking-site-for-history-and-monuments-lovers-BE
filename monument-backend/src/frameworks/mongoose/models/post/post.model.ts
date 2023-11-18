@@ -21,7 +21,7 @@ export class Post {
     @Prop({ required: true})
     localisation: string;
 
-    @Prop()
+    @Prop({ default: Date.now})
     published: Date;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true})

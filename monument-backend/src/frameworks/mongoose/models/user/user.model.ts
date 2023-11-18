@@ -10,7 +10,7 @@ export class User {
     @Prop({ required: true, unique: true })
     userName: string;
 
-    @Prop()
+    @Prop({ default: Date.now})
     dateOfJoining: Date;
 
     @Prop({ required: true})

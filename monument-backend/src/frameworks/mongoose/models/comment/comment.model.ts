@@ -12,7 +12,7 @@ export class Comment {
     @Prop({ required: true})
     post: Post;
 
-    @Prop()
+    @Prop({ default: Date.now})
     creationDate: Date;
 
     @Prop({ required: true})
