@@ -16,28 +16,28 @@ export class PostFactoryService {
         return post
     }
 
-    public async createListOfPostDtos(postList: Promise<Post[]>): Promise<PostListItemDto[]> {
-        let postListDto: PostListItemDto[]
-        postList.then((postList)=> {
-            postListDto = postList.map((post)=>{
-                let postListItem = new PostListItemDto;
-                postListItem.title = post.title;
-                postListItem.category = post.category;
-                postListItem.localisation = post.category;
-                postListItem.numberOfLikes = post.likes.length;
-                postListItem.numberOfComments = post.comments.length;
-                return postListItem 
-            })
-        })
-        // const postListDto = postList.map((post)=>{
-        //     let postListItem = new PostListItemDto;
-        //     postListItem.title = post.title;
-        //     postListItem.category = post.category;
-        //     postListItem.localisation = post.category;
-        //     postListItem.numberOfLikes = post.likes.length;
-        //     postListItem.numberOfComments = post.comments.length;
-        //     return postListItem
-        // });
-        return await postListDto;
-    }
+    // public async createListOfPostDtos(postList: Promise<Post[]>): Promise<PostListItemDto[]> {
+    //     let postListDto: PostListItemDto[]
+    //     postList.then((postList)=> {
+    //         postListDto = postList.map((post)=>{
+    //             let postListItem = new PostListItemDto;
+    //             postListItem.title = post.title;
+    //             postListItem.category = post.category;
+    //             postListItem.localisation = post.category;
+    //             postListItem.numberOfLikes = post.likes.length;
+    //             postListItem.numberOfComments = post.comments.length;
+    //             return postListItem 
+    //         })
+    //     })
+    //     // const postListDto = postList.map((post)=>{
+    //     //     let postListItem = new PostListItemDto;
+    //     //     postListItem.title = post.title;
+    //     //     postListItem.category = post.category;
+    //     //     postListItem.localisation = post.category;
+    //     //     postListItem.numberOfLikes = post.likes.length;
+    //     //     postListItem.numberOfComments = post.comments.length;
+    //     //     return postListItem
+    //     // });
+    //     return await postListDto;
+    // }
 }
