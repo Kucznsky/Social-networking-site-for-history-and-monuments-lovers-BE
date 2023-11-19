@@ -7,10 +7,6 @@ export class UserDto {
 
     @IsString()
     @IsNotEmpty()
-    title: string;
-
-    @IsString()
-    @IsNotEmpty()
     userName: string;
 
     @IsDate()
