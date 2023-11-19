@@ -46,7 +46,7 @@ export class PostUseCase {
 
       async getPost(id: string): Promise<Post> {
         try {
-          return this.dataServices.posts.get(id);
+          return this.dataServices.posts.getById(id);
         }
         catch(error) {
           console.log(error)
