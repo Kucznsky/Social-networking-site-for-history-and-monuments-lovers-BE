@@ -22,7 +22,7 @@ export class User {
     @Prop({ required: true})
     isActive: boolean;
 
-    @Prop({ required: true, select: false})
+    @Prop({ required: true})
     passwordHash: string;
 }
 
