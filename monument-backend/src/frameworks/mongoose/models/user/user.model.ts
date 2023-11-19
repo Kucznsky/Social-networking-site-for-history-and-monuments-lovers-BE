@@ -15,6 +15,9 @@ export class User {
 
     @Prop({ required: true})
     isStaff: boolean;
+
+    @Prop({ required: true})
+    isAdmin: boolean;
     
     @Prop({ required: true})
     isActive: boolean;

@@ -9,6 +9,7 @@ export class UserFactoryService {
         user.email = userDto.email;
         user.userName = userDto.userName;
         user.isStaff = false;
+        user.isAdmin = false;
         user.isActive = false;
         user.passwordHash = hash;
         //profilePicture

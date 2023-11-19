@@ -23,6 +23,10 @@ export class UserDto {
 
     @IsBoolean()
     @IsNotEmpty()
+    isAdmin: boolean;
+
+    @IsBoolean()
+    @IsNotEmpty()
     isActive: boolean;
 }
 
