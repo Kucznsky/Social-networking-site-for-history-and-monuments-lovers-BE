@@ -17,7 +17,7 @@ export class UserFactoryService {
         return user
     }
 
-    public createUserResponseDto(user: User): UserDto {
+    public createAuthResponseDto(user: User): UserDto {
         const newUserResponseDto = new UserDto();
         newUserResponseDto.email = user.email;
         newUserResponseDto.userName = user.userName;

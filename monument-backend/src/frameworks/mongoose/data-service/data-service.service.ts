@@ -4,13 +4,14 @@ import { User, UserDocument } from '../models/user/user.model';
 import { Post, PostDocument } from '../models/post/post.model';
 import { Comment, CommentDocument } from '../models/comment/comment.model';
 import { Like, LikeDocument } from '../models/like/like.model';
-import { MongoGenericRepository } from '../mongo-generic-repository/mongo-generic-repository';
+import { MongoGenericRepository } from '../generic-repositories/mongo-generic-repository';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { MongoUserGenericRepository } from '../generic-repositories/mongo-user-generic-repository';
 
 @Injectable()
 export class DataService implements IDataServices, OnApplicationBootstrap  {
-    users: MongoGenericRepository<User>;
+    users: MongoUserGenericRepository<User>;
     posts: MongoGenericRepository<Post>;
     comments: MongoGenericRepository<Comment>;
     likes: MongoGenericRepository<Like>;
@@ -27,7 +28,7 @@ export class DataService implements IDataServices, OnApplicationBootstrap  {
     ) {}
 
     onApplicationBootstrap() {
-        this.users = new MongoGenericRepository<User>(this.UserRepository);
+        this.users = new MongoUserGenericRepository<User>(this.UserRepository);
         this.posts = new MongoGenericRepository<Post>(this.PostRepository);
         this.comments = new MongoGenericRepository<Comment>(this.CommentRepository);
         this.likes = new MongoGenericRepository<Like>(this.LikeRepository);
