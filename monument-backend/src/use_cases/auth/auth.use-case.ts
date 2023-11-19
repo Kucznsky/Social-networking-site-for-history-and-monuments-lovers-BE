@@ -1,4 +1,4 @@
-import { AuthDto } from "src/core/dtos/auth/auth.dto"
+import { RegisterDto } from "src/core/dtos/auth/register.dto"
 
 export class AuthUseCase {
     login() {
