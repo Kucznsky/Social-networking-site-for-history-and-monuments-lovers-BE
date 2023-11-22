@@ -17,8 +17,8 @@ export class AuthController {
     async login(@Body() loginDto: LoginDto){
         const userLoggingInResponse = new AuthUserResponseDto()
         try{
-            const loggedUser = await this.userService.login(loginDto)
-            userLoggingInResponse.user = this.userFactoryService.createAuthResponseDto(loggedUser);
+            const token = await this.userService.login(loginDto)
+            userLoggingInResponse.jwtToken = token;
             userLoggingInResponse.success = true;
         } catch(error){
             console.log(error);
@@ -33,8 +33,8 @@ export class AuthController {
         const createdUserResponse = new AuthUserResponseDto();
         try{
             const newUser = this.userFactoryService.createUserObject(authDto, hash);
-            const createdUser = await this.userService.register(newUser);
-            createdUserResponse.user = this.userFactoryService.createAuthResponseDto(createdUser);
+            const token = await this.userService.register(newUser);
+            createdUserResponse.jwtToken = token;
             createdUserResponse.success = true;
         } catch(error){
             console.log(error);
