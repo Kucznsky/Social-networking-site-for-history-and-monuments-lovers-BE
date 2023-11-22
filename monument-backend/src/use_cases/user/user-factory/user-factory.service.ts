@@ -17,13 +17,13 @@ export class UserFactoryService {
         return user
     }
 
-    public createAuthResponseDto(user: User): UserDto {
-        const newUserResponseDto = new UserDto();
-        newUserResponseDto.email = user.email;
-        newUserResponseDto.userName = user.userName;
-        newUserResponseDto.isStaff = user.isStaff;
-        newUserResponseDto.isAdmin = user.isAdmin;
-        newUserResponseDto.isActive = user.isActive;
-        return newUserResponseDto
-    }
+    // public createAuthResponseDto(user: User): UserDto {
+    //     const newUserResponseDto = new UserDto();
+    //     newUserResponseDto.email = user.email;
+    //     newUserResponseDto.userName = user.userName;
+    //     newUserResponseDto.isStaff = user.isStaff;
+    //     newUserResponseDto.isAdmin = user.isAdmin;
+    //     newUserResponseDto.isActive = user.isActive;
+    //     return newUserResponseDto
+    // }
 }
