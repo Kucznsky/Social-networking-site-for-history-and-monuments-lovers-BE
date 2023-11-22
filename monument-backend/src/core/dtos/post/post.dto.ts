@@ -13,6 +13,9 @@ export class PostDto {
     @IsString()
     @IsNotEmpty()
     content: string;
+
+    @IsString()
+    @IsNotEmpty()
     localisation: string;
 
     @IsNotEmpty()
