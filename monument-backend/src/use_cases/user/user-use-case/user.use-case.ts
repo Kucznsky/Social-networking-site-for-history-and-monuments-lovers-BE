@@ -5,6 +5,7 @@ import { User } from "src/core/entities/user.entity";
 import * as argon from 'argon2'
 import { JwtService } from "@nestjs/jwt";
 import { AccessTokenWrapperDto } from "src/core/dtos/auth/access-token-wrapper.dto";
+import { ConfigService } from "@nestjs/config";
 
 
 @Injectable()
@@ -12,7 +13,8 @@ import { AccessTokenWrapperDto } from "src/core/dtos/auth/access-token-wrapper.d
 export class UserUseCase {
     constructor(
         private readonly dataServices: IDataServices, 
-        private readonly jwtService: JwtService
+        private readonly jwtService: JwtService,
+        private readonly config: ConfigService,
       ) {}
 
     public async register(user: User): Promise<AccessTokenWrapperDto> {
@@ -27,11 +29,11 @@ export class UserUseCase {
 
     
     public async login(loginDto: LoginDto): Promise<AccessTokenWrapperDto> {
-        const user = await this.dataServices.users.getByEmail(loginDto.email)
+        const user = await this.dataServices.users.getByEmail(loginDto.email);
         if(!user) {
             throw new ForbiddenException(`There's no user with this email`); 
         }
-        const arePasswordsMatching = await argon.verify(user.passwordHash, loginDto.password)
+        const arePasswordsMatching = await argon.verify(user.passwordHash, loginDto.password);
         if(!arePasswordsMatching){
             throw new ForbiddenException(`Incorrect password`); 
         }
@@ -40,8 +42,8 @@ export class UserUseCase {
     };
 
     private signToken(userId: string, email: string): Promise<string>{
-        const payload = { sub: userId, email: email }
-        const options = { expiresIn: '45m', secret: 'blb'}
+        const payload = { sub: userId, email: email };
+        const options = { expiresIn: '45m', secret: this.config.get('JWT_SECRET')};
         
         return this.jwtService.signAsync(payload, options)
     }
