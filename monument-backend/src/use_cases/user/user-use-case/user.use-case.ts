@@ -3,27 +3,31 @@ import { IDataServices } from "src/core/abstracts/data-service.abstract";
 import { LoginDto } from "src/core/dtos/auth/login.dto";
 import { User } from "src/core/entities/user.entity";
 import * as argon from 'argon2'
+import { JwtService } from "@nestjs/jwt";
+import { AccessTokenWrapperDto } from "src/core/dtos/auth/access-token-wrapper.dto";
 
 
 @Injectable()
 
 export class UserUseCase {
     constructor(
-        private dataServices: IDataServices,
+        private readonly dataServices: IDataServices, 
+        private readonly jwtService: JwtService
       ) {}
 
-    async register(user: User) {
+    public async register(user: User): Promise<AccessTokenWrapperDto> {
         try {
-            const createdPost = this.dataServices.users.create(user)
-            return createdPost
+            const createdUser = await this.dataServices.users.create(user)
+            const token = await this.signToken(user.id, user.email)
+            return {access_token: token}
         } catch (error) {
             throw error
         }
     };
 
-    async login(loginDto: LoginDto): Promise<User> {
+    
+    public async login(loginDto: LoginDto): Promise<AccessTokenWrapperDto> {
         const user = await this.dataServices.users.getByEmail(loginDto.email)
-        console.log(user)
         if(!user) {
             throw new ForbiddenException(`There's no user with this email`); 
         }
@@ -31,6 +35,14 @@ export class UserUseCase {
         if(!arePasswordsMatching){
             throw new ForbiddenException(`Incorrect password`); 
         }
-        return user;
+        const token = await this.signToken(user.id, user.email);
+        return {access_token: token}
     };
+
+    private signToken(userId: string, email: string): Promise<string>{
+        const payload = { sub: userId, email: email }
+        const options = { expiresIn: '45m', secret: 'blb'}
+        
+        return this.jwtService.signAsync(payload, options)
+    }
 }

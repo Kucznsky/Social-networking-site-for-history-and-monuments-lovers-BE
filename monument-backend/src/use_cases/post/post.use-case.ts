@@ -6,7 +6,7 @@ import { Post } from "src/core/entities/post.entity";
 @Injectable()
 export class PostUseCase {
     constructor(
-        private dataServices: IDataServices,
+        private readonly dataServices: IDataServices,
         // private crmServices: ICRMServices,
       ) {}
     
