@@ -19,7 +19,6 @@ export class UserUseCase {
 
     public async register(user: User): Promise<AccessTokenWrapperDto> {
         try {
-            const createdUser = await this.dataServices.users.create(user)
             const token = await this.signToken(user.id, user.email)
             return {access_token: token}
         } catch (error) {
