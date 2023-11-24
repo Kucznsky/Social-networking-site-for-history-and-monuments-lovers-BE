@@ -2,5 +2,8 @@ import { IsNotEmpty } from "class-validator";
 
 export class LikeDto {
     @IsNotEmpty()
-    userId: string;
+    userId: any;
+
+    @IsNotEmpty()
+    postId: any;
 }
