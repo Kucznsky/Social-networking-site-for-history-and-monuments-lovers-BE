@@ -24,10 +24,10 @@ export class LikeController {
 
     @Delete()
     deleteLike(@Body() likeDto: LikeDto){
-    try {
-        //TODO
-    } catch(error) {
-        //TODO
-    }
+        try {
+            this.likeService.deleteLike(likeDto)
+        } catch(error) {
+            return error
+        }
     }
 }

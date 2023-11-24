@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { ForbiddenException, Injectable } from "@nestjs/common";
 import { IDataServices } from "src/core/abstracts/data-service.abstract";
 import { LikeDto } from "src/core/dtos/like/like.dto";
 import { Like } from "src/core/entities/like.entity";
@@ -21,13 +21,11 @@ export class LikeUseCase {
     }
 
     async deleteLike(likeDto: LikeDto) {
-        try{
-            const likedPost = await this.dataServices.posts.getById(likeDto.postId)
-            const likeToRemove = likedPost.likes.find((like)=> like.user === likeDto.userId)
-            return this.dataServices.likes.delete(likeToRemove.id)
-        } catch (error) {
-            console.log(error)
-            throw error;
+        const listOfLikes = await this.dataServices.likes.getAll()
+        const likeToRemove = listOfLikes.find((like)=> { return (like.post.toString() === likeDto.postId && like.user.toString() === likeDto.userId)})
+        if(!likeToRemove){
+            throw new ForbiddenException(`There's no like under this post added by this user`);
         }
+        return this.dataServices.likes.delete(likeToRemove?.id)
     }
 }
