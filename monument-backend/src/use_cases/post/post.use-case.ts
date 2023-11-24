@@ -13,8 +13,6 @@ export class PostUseCase {
       async createPost(post: Post): Promise<Post>{
         try{
             const createdPost = await this.dataServices.posts.create(post);
-            // console.log(createdPost);
-            // await this.crmServices.postAdded(createdPost)
             
             return createdPost; 
         } catch (error) {
