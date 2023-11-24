@@ -1,9 +1,10 @@
-import { Controller, Body, Post, Put, Param, Get, Delete } from '@nestjs/common';
+import { Controller, Body, Post, Put, Param, Get, Delete, UseGuards } from '@nestjs/common';
 import { CreatePostResponseDto } from '../../core/dtos/post/create-post-response.dto';
 import { PostDto } from 'src/core/dtos/post/post.dto';
 import { PostFactoryService } from 'src/use_cases/post/post-factory/post-factory.service';
 import { PostUseCase } from 'src/use_cases/post/post.use-case';
 import { EditPostResponseDto } from 'src/core/dtos/post/edit-post-response.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('post')
 export class PostController {
@@ -13,6 +14,7 @@ export class PostController {
       ) {}
 
     @Post()
+    @UseGuards(AuthGuard('jwt'))
     async createPost(@Body() postDto: PostDto) {
         const createdPostResponse = new CreatePostResponseDto();
         try {
@@ -29,6 +31,7 @@ export class PostController {
     }
 
     @Put(':id')
+    @UseGuards(AuthGuard('jwt'))
     async editPost(@Param('id') postId: string, @Body() postDto: PostDto) {
         const editedPostResponse = new EditPostResponseDto();
         try {
@@ -54,6 +57,7 @@ export class PostController {
     }
 
     @Delete(':id')
+    @UseGuards(AuthGuard('jwt'))
     async deletePost(@Param('id') postId: string) {
         return this.postServices.deletePost(postId)
     }
