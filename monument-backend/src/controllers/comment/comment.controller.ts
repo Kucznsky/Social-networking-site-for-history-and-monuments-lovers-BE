@@ -23,6 +23,7 @@ export class CommentController {
             createdCommentResponse.createdComment = createdComment;
             createdCommentResponse.success = true;
         } catch (error) {
+            console.log(error)
             createdCommentResponse.success = false;
         }
 
@@ -46,8 +47,8 @@ export class CommentController {
     }
 
     @Get(':postId')
-    getComments(){
-        //TODO
+    async getComments(@Param('postId') postId: string){
+        return await this.commentService.getComments(postId)
     }
 
     @Delete(':id')

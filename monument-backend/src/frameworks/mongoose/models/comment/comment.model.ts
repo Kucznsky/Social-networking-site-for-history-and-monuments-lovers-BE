@@ -1,15 +1,16 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Post } from "../post/post.model";
 import { User } from "../user/user.model";
+import mongoose from "mongoose";
 
 export type CommentDocument = Comment & Document;
 
 @Schema()
 export class Comment {
-    @Prop({ required: true})
+    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true})
     author: User;
 
-    @Prop({ required: true})
+    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Post', required: true})
     post: Post;
 
     @Prop({ default: Date.now})

@@ -10,6 +10,6 @@ export class CommentFactoryService {
         comment.content = commentDto.content;
         comment.post = commentDto.postId;
 
-        return comment
+        return comment;
     }
 }
