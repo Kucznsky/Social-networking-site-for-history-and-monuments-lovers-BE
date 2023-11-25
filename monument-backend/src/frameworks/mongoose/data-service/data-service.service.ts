@@ -8,12 +8,13 @@ import { MongoGenericRepository } from '../generic-repositories/mongo-generic-re
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { MongoUserGenericRepository } from '../generic-repositories/mongo-user-generic-repository';
+import { MongoCommentGenericRepository } from '../generic-repositories/mongo-comment-generic-repository';
 
 @Injectable()
 export class DataService implements IDataServices, OnApplicationBootstrap  {
     users: MongoUserGenericRepository<User>;
     posts: MongoGenericRepository<Post>;
-    comments: MongoGenericRepository<Comment>;
+    comments: MongoCommentGenericRepository<Comment>;
     likes: MongoGenericRepository<Like>;
   
     constructor(
@@ -30,7 +31,7 @@ export class DataService implements IDataServices, OnApplicationBootstrap  {
     onApplicationBootstrap() {
         this.users = new MongoUserGenericRepository<User>(this.UserRepository);
         this.posts = new MongoGenericRepository<Post>(this.PostRepository);
-        this.comments = new MongoGenericRepository<Comment>(this.CommentRepository);
+        this.comments = new MongoCommentGenericRepository<Comment>(this.CommentRepository);
         this.likes = new MongoGenericRepository<Like>(this.LikeRepository);
       }
 }
