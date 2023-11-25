@@ -14,9 +14,9 @@ export class CommentUseCase {
         return createdComment;
     }
 
-    editComment(commentId: string, comment: Comment): Promise<Comment> {
-        //TODO
-        return
+    async editComment(commentId: string, comment: Comment): Promise<Comment> {
+        const createdComment = await this.dataServices.comments.update(commentId, comment);
+        return createdComment;
     }
 
     getComments(postId: string): Promise<Comment[]>{
@@ -24,7 +24,6 @@ export class CommentUseCase {
     }
 
     deleteComment(commentId: string) {
-        //TODO
-        return
+        return this.dataServices.comments.delete(commentId)
     }
 }
