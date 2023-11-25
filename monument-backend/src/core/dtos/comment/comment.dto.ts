@@ -6,11 +6,7 @@ export class CommentDto {
     
     @IsNotEmpty()
     postId: any;
-
-    @IsNotEmpty()
-    @IsDate()
-    creationDate: Date;
-
+    
     @IsNotEmpty()
     @IsString()
     content: string;
