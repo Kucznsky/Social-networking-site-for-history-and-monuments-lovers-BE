@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
-import { ICommentGenericRepository } from "src/core/abstracts/comment-generic-repository.abstract";
+import { ILikeCommentGenericRepository } from "src/core/abstracts/like-comment-generic-repository.abstract";
 
-export class MongoCommentGenericRepository<T> implements ICommentGenericRepository<T> {
+export class MongoLikeCommentGenericRepository<T> implements ILikeCommentGenericRepository<T> {
     private model: Model<T>;
     private _populateOnFind: string[];
   
