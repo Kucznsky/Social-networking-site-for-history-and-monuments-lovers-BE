@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-// import { ICRMServices } from "src/core/abstracts/crm-service.abstract";
 import { IDataServices } from "src/core/abstracts/data-service.abstract";
 import { Post } from "src/core/entities/post.entity";
 
@@ -7,7 +6,6 @@ import { Post } from "src/core/entities/post.entity";
 export class PostUseCase {
     constructor(
         private readonly dataServices: IDataServices,
-        // private crmServices: ICRMServices,
       ) {}
     
       async createPost(post: Post): Promise<Post>{
