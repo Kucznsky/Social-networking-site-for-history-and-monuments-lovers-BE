@@ -4,14 +4,14 @@ import { Comment } from "../entities/comment.entity";
 import { IGenericRepository } from "./generic-repository.abstract";
 import { Like } from "../entities/like.entity";
 import { IUserGenericRepository } from "./user-generic-repository.abstract";
-import { ICommentGenericRepository } from "./comment-generic-repository.abstract";
+import { ILikeCommentGenericRepository } from "./like-comment-generic-repository.abstract";
 
 export abstract class IDataServices {
     abstract users: IUserGenericRepository<User>;
   
     abstract posts: IGenericRepository<Post>;
   
-    abstract comments: ICommentGenericRepository<Comment>;
+    abstract comments: ILikeCommentGenericRepository<Comment>;
 
-    abstract likes: IGenericRepository<Like>
+    abstract likes: ILikeCommentGenericRepository<Like>
   }
