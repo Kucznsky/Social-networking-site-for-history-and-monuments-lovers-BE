@@ -19,6 +19,7 @@ export class UserUseCase {
 
     public async register(user: User): Promise<AccessTokenWrapperDto> {
         try {
+            this.dataServices.users.create(user)
             const token = await this.signToken(user.id, user.email)
             return {access_token: token}
         } catch (error) {
@@ -42,7 +43,7 @@ export class UserUseCase {
 
     private signToken(userId: string, email: string): Promise<string>{
         const payload = { sub: userId, email: email };
-        const options = { expiresIn: '45m', secret: this.config.get('JWT_SECRET')};
+        const options = { expiresIn: '7d', secret: this.config.get('JWT_SECRET')}; //just for debug purposes, later expiresIn needs to be changed later to the smaller value
         
         return this.jwtService.signAsync(payload, options)
     }
