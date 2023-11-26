@@ -1,6 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { IDataServices } from "src/core/abstracts/data-service.abstract";
-import { PostListItemDto } from "src/core/dtos/post/posts-list-item.dto";
 import { Post } from "src/core/entities/post.entity";
 
 @Injectable()
@@ -31,7 +30,7 @@ export class PostUseCase {
         }
       }
 
-      async getAllPosts(): Promise<PostListItemDto[]> {
+      async getAllPosts(): Promise<Post[]> {
         try {
           const postList = await this.dataServices.posts.getAll();
 
