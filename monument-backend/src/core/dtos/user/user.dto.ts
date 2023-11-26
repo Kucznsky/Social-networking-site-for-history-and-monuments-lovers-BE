@@ -9,10 +9,6 @@ export class UserDto {
     @IsNotEmpty()
     userName: string;
 
-    @IsDate()
-    @IsNotEmpty()
-    dateOfJoining: Date;
-
     @IsBoolean()
     @IsNotEmpty()
     isStaff: boolean;
