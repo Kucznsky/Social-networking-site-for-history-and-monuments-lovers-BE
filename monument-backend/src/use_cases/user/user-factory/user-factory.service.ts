@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { RegisterDto } from 'src/core/dtos/auth/register.dto';
-import { UserDto } from 'src/core/dtos/user/user.dto';
+import { UserResponseDto } from 'src/core/dtos/user/user-response.dto';
 import { User } from 'src/core/entities/user.entity';
 
 @Injectable()
@@ -17,13 +17,15 @@ export class UserFactoryService {
         return user
     }
 
-    // public createAuthResponseDto(user: User): UserDto {
-    //     const newUserResponseDto = new UserDto();
-    //     newUserResponseDto.email = user.email;
-    //     newUserResponseDto.userName = user.userName;
-    //     newUserResponseDto.isStaff = user.isStaff;
-    //     newUserResponseDto.isAdmin = user.isAdmin;
-    //     newUserResponseDto.isActive = user.isActive;
-    //     return newUserResponseDto
-    // }
+    public createUserDto(user: User): UserResponseDto {
+        const userDto = new UserResponseDto()
+        userDto.id = user.id;
+        userDto.email = user.email;
+        userDto.userName = user.userName;
+        userDto.dateOfJoining = user.dateOfJoining;
+        userDto.isStaff = user.isStaff;
+        userDto.isAdmin = user.isAdmin;
+        userDto.isActive = user.isActive;
+        return userDto;
+    }
 }

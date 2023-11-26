@@ -6,6 +6,7 @@ import * as argon from 'argon2'
 import { JwtService } from "@nestjs/jwt";
 import { AccessTokenWrapperDto } from "src/core/dtos/auth/access-token-wrapper.dto";
 import { ConfigService } from "@nestjs/config";
+import { UserDto } from "src/core/dtos/user/user.dto";
 
 
 @Injectable()
@@ -40,6 +41,24 @@ export class UserUseCase {
         const token = await this.signToken(user.id, user.email);
         return {access_token: token}
     };
+
+    public getUserById(userId: string): Promise<User> {
+        const user = this.dataServices.users.getById(userId)
+        if(!user) {
+            throw new ForbiddenException(`There's no user with this id`);
+        }
+        return user
+    }
+
+    public deleteUser(userId: string) {
+        return this.dataServices.users.delete(userId);
+    }
+
+    public async updateUserData(userId: string, userDto: UserDto){
+        let user = await this.dataServices.users.getById(userId)
+        Object.keys(userDto).forEach((key)=>user[key] = userDto[key])
+        this.dataServices.users.update(userId, user)
+    }
 
     private signToken(userId: string, email: string): Promise<string>{
         const payload = { sub: userId, email: email };

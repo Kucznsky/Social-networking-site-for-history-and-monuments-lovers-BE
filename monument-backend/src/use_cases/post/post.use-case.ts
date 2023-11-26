@@ -8,51 +8,47 @@ export class PostUseCase {
         private readonly dataServices: IDataServices,
       ) {}
     
-      async createPost(post: Post): Promise<Post>{
+      public async createPost(post: Post): Promise<Post>{
         try{
             const createdPost = await this.dataServices.posts.create(post);
             
             return createdPost; 
         } catch (error) {
-            console.log(error)
             throw error;
         }
       }
 
-      async editPost(postId: string, post: Post): Promise<Post>{
+      public async editPost(postId: string, post: Post): Promise<Post>{
         try{
             const editedPost = await this.dataServices.posts.update(postId, post);
             
             return editedPost; 
         } catch (error) {
-            console.log(error)
             throw error;
         }
       }
 
-      async getAllPosts(): Promise<Post[]> {
+      public async getAllPosts(): Promise<Post[]> {
         try {
           const postList = await this.dataServices.posts.getAll();
 
           return postList
         }
         catch(error) {
-          console.log(error)
           throw error;
         }
       }
 
-      async getPost(id: string): Promise<Post> {
+      public async getPost(id: string): Promise<Post> {
         try {
           return this.dataServices.posts.getById(id);
         }
         catch(error) {
-          console.log(error)
           throw error;
         }
       }
 
-      async deletePost(id: string) {
+      public deletePost(id: string) {
         return this.dataServices.posts.delete(id)
       }
 }
