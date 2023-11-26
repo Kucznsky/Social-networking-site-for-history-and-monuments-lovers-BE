@@ -11,13 +11,14 @@ export class LikeUseCase {
       ) {}
 
     async createLike(like: Like): Promise<Like>{
-        try{
-            const createdLike = await this.dataServices.likes.create(like);
-            return createdLike; 
-        } catch (error) {
-            console.log(error)
-            throw error;
+        const likedPost =  await this.dataServices.posts.getById(like.post.toString())
+        if(!likedPost){
+            throw new ForbiddenException(`Post doesn't exist`); 
         }
+        const createdLike = await this.dataServices.likes.create(like);
+        likedPost.numberOfLikes += 1
+        this.dataServices.posts.update(likedPost.id, likedPost)
+        return createdLike; 
     }
 
     async deleteLike(likeDto: LikeDto) {
@@ -26,6 +27,8 @@ export class LikeUseCase {
         if(!likeToRemove){
             throw new ForbiddenException(`There's no like under this post added by this user`);
         }
+        const likedPost =  await this.dataServices.posts.getById(likeDto.postId)
+        likedPost.numberOfLikes -= 1
         return this.dataServices.likes.delete(likeToRemove?.id)
     }
 }

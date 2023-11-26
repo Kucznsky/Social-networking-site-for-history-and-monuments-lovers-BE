@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { ForbiddenException, Injectable } from "@nestjs/common";
 import { IDataServices } from "src/core/abstracts/data-service.abstract";
 import { Comment } from "src/core/entities/comment.entity";
 
@@ -10,6 +10,12 @@ export class CommentUseCase {
     ) {}
       
     async createComment(comment: Comment): Promise<Comment>{
+        const commentedPost = await this.dataServices.posts.getById(comment.post.toString())
+        if(!commentedPost){
+            throw new ForbiddenException(`Post doesn't exist`); 
+        }
+        commentedPost.numberOFComments += 1
+        this.dataServices.posts.update(commentedPost.id, commentedPost)
         const createdComment = await this.dataServices.comments.create(comment);
         return createdComment;
     }
