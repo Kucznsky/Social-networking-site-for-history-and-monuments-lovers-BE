@@ -23,7 +23,7 @@ export class CommentController {
             createdCommentResponse.createdComment = createdComment;
             createdCommentResponse.success = true;
         } catch (error) {
-            console.log(error)
+            console.log(error);
             createdCommentResponse.success = false;
         }
 

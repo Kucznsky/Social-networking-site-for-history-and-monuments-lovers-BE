@@ -1,4 +1,4 @@
-import { Body, Controller, ForbiddenException, Post } from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Get, Param, Post, Redirect } from '@nestjs/common';
 import { RegisterDto } from 'src/core/dtos/auth/register.dto';
 import { UserFactoryService } from 'src/use_cases/user/user-factory/user-factory.service';
 import { UserUseCase } from 'src/use_cases/user/user-use-case/user.use-case';
@@ -47,4 +47,10 @@ export class AuthController {
         }
         return createdUserResponse;
     };
+
+    @Get('activate/:userId')
+    @Redirect('http://localhost:3000', 302)
+    activateAccount(@Param('userId') userId: string) {
+        this.userService.activateUserAccount(userId);
+    }
 }

@@ -20,11 +20,11 @@ export class UserUseCase {
 
     public async register(user: User): Promise<AccessTokenWrapperDto> {
         try {
-            this.dataServices.users.create(user)
-            const token = await this.signToken(user.id, user.email)
-            return {access_token: token}
+            this.dataServices.users.create(user);
+            const token = await this.signToken(user.id, user.email);
+            return {access_token: token};
         } catch (error) {
-            throw error
+            throw error;
         }
     };
 
@@ -39,15 +39,15 @@ export class UserUseCase {
             throw new ForbiddenException(`Incorrect password`); 
         }
         const token = await this.signToken(user.id, user.email);
-        return {access_token: token}
+        return {access_token: token};
     };
 
     public getUserById(userId: string): Promise<User> {
-        const user = this.dataServices.users.getById(userId)
+        const user = this.dataServices.users.getById(userId);
         if(!user) {
             throw new ForbiddenException(`There's no user with this id`);
         }
-        return user
+        return user;
     }
 
     public deleteUser(userId: string) {
@@ -55,9 +55,15 @@ export class UserUseCase {
     }
 
     public async updateUserData(userId: string, userDto: UserDto){
-        let user = await this.dataServices.users.getById(userId)
-        Object.keys(userDto).forEach((key)=>user[key] = userDto[key])
-        this.dataServices.users.update(userId, user)
+        let user = await this.dataServices.users.getById(userId);
+        Object.keys(userDto).forEach((key)=>user[key] = userDto[key]);
+        this.dataServices.users.update(userId, user);
+    }
+
+    public async activateUserAccount(userId: string) {
+        const userToActivate = await this.dataServices.users.getById(userId);
+        userToActivate.isActive = true;
+        this.dataServices.users.update(userId, userToActivate);
     }
 
     private signToken(userId: string, email: string): Promise<string>{
