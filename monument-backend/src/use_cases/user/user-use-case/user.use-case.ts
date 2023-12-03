@@ -86,7 +86,5 @@ export class UserUseCase {
                     `</br>`+
                     `<a href="http://localhost:3000/auth/activate/${userId}">Confirm email</a>`,
       })
-      .then(() => {})
-      .catch(() => {});
     }
 }
