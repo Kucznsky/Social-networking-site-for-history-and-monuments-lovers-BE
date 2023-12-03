@@ -7,6 +7,7 @@ import { JwtService } from "@nestjs/jwt";
 import { AccessTokenWrapperDto } from "src/core/dtos/auth/access-token-wrapper.dto";
 import { ConfigService } from "@nestjs/config";
 import { UserDto } from "src/core/dtos/user/user.dto";
+import { MailerService } from "@nestjs-modules/mailer";
 
 
 @Injectable()
@@ -16,11 +17,13 @@ export class UserUseCase {
         private readonly dataServices: IDataServices, 
         private readonly jwtService: JwtService,
         private readonly config: ConfigService,
+        private readonly mailerService: MailerService
       ) {}
 
     public async register(user: User): Promise<AccessTokenWrapperDto> {
         try {
-            this.dataServices.users.create(user);
+            const createdUser = await this.dataServices.users.create(user);
+            this.sendEmail(createdUser.id, createdUser.email);
             const token = await this.signToken(user.id, user.email);
             return {access_token: token};
         } catch (error) {
@@ -71,5 +74,19 @@ export class UserUseCase {
         const options = { expiresIn: '7d', secret: this.config.get('JWT_SECRET')}; //just for debug purposes, later expiresIn needs to be changed later to the smaller value
         
         return this.jwtService.signAsync(payload, options)
+    }
+
+    private sendEmail(userId: string, email: string){
+        this.mailerService.sendMail({
+            to: email,
+            from: 'noreply@historyMonumentsLovers.com',
+            subject: 'Email confirmation',
+            text: 'Click the link below to confirm Your email address',
+            html: `<p>Click the link below to confirm Your email address</p>` +
+                    `</br>`+
+                    `<a href="http://localhost:3000/auth/activate/${userId}">Confirm email</a>`,
+      })
+      .then(() => {})
+      .catch(() => {});
     }
 }
