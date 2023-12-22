@@ -10,4 +10,8 @@ export class LikeFactoryService {
         like.post = likeDto.postId;
         return like;
     }
+
+    createLikeDto(likes: Like[]): LikeDto[] {
+        return likes.map((like)=>{return {userId: like.user.toString(), postId: like.post.toString()}})
+    }
 }

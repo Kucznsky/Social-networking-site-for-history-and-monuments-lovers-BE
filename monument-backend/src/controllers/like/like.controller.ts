@@ -13,12 +13,13 @@ export class LikeController {
       ) {}
 
     @Get(':userId')
-    getUsersLikes(@Param('userId') userId: string){
-        return this.likeService.getUsersLikes(userId)
+    async getUsersLikes(@Param('userId') userId: string) {
+        const fetchedLikes = await this.likeService.getUsersLikes(userId)
+        return this.likeFactoryService.createLikeDto(fetchedLikes)
     }
 
     @Post()
-    createLike(@Body() likeDto: LikeDto){
+    createLike(@Body() likeDto: LikeDto) {
         try {
             const like = this.likeFactoryService.createLikeObject(likeDto)
             this.likeService.createLike(like)
