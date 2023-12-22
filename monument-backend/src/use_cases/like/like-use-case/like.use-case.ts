@@ -10,6 +10,12 @@ export class LikeUseCase {
         private readonly dataServices: IDataServices,
       ) {}
 
+    async getUsersLikes(userId: string): Promise<Like[]> {
+        const allLikes = await this.dataServices.likes.getAll()
+        const filteredLikesByUserId = allLikes.filter((like)=>like.user.toString() === userId)
+        return filteredLikesByUserId
+    }
+
     async createLike(like: Like): Promise<Like>{
         const likedPost =  await this.dataServices.posts.getById(like.post.toString())
         if(!likedPost){

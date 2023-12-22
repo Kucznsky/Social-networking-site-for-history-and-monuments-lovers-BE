@@ -12,6 +12,11 @@ export class LikeController {
         private readonly likeFactoryService: LikeFactoryService,
       ) {}
 
+    @Get(':userId')
+    getUsersLikes(@Param('userId') userId: string){
+        return this.likeService.getUsersLikes(userId)
+    }
+
     @Post()
     createLike(@Body() likeDto: LikeDto){
         try {
@@ -22,7 +27,7 @@ export class LikeController {
         }
     }
 
-    @Delete()
+    @Post('remove')
     deleteLike(@Body() likeDto: LikeDto){
         try {
             this.likeService.deleteLike(likeDto)
