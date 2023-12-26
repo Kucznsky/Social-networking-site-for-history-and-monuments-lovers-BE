@@ -21,6 +21,16 @@ export class UserController {
         }
     }
 
+    @Get('userName/:userName')
+    async getUsersByUsername(@Param('userName') userName: string){
+        try{
+            const user = await this.userServices.getUserByUserName(userName)
+            return this.userFactoryService.createUserDto(user)
+        } catch(error) {
+            return error
+        }
+    }
+
     @Put(':userId')
     @UseGuards(AuthGuard('jwt'))
     async editUserData(@Param('userId') userId: string, @Body() userDto: UserDto) {

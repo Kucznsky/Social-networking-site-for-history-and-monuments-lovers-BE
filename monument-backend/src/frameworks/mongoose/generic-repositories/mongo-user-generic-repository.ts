@@ -21,7 +21,11 @@ export class MongoUserGenericRepository<T> implements IUserGenericRepository<T> 
     getByEmail(userEmail: string): Promise<T> {
         return this.model.findOne({email: userEmail}).populate(this._populateOnFind).exec() as Promise<T>;
     }
-  
+
+    getByUserName(userName: string): Promise<T> {
+      return this.model.findOne({userName: userName}).populate(this._populateOnFind).exec() as Promise<T>;
+    }
+
     create(item: T): Promise<T> {
       return this.model.create(item);
     }

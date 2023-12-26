@@ -53,6 +53,14 @@ export class UserUseCase {
         return user;
     }
 
+    public async getUserByUserName(userName: string): Promise<User> {
+        const user = this.dataServices.users.getByUserName(userName);
+        if(!user) {
+            throw new ForbiddenException(`There's no user with this user name`);
+        }
+        return user;
+    }
+
     public deleteUser(userId: string) {
         return this.dataServices.users.delete(userId);
     }
