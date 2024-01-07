@@ -61,6 +61,12 @@ export class UserUseCase {
         return user;
     }
 
+    public async getAuthorsOfCommentsUnderPost(postId: string): Promise<User[]> {
+        const comments = await this.dataServices.comments.getByPostId(postId)
+        const users = await this.dataServices.users.getAll()
+        return users.filter((user)=> comments.some((comment)=> comment.author.toString() === user.id))
+    }
+
     public deleteUser(userId: string) {
         return this.dataServices.users.delete(userId);
     }

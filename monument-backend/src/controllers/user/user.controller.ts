@@ -11,6 +11,17 @@ export class UserController {
         private readonly userFactoryService: UserFactoryService,
       ) {}
 
+    @Get('commented-post/:postId')
+    async getAuthorsOfCommentsUnderPost(@Param('postId') postId: string){
+        try{
+            const users = await this.userServices.getAuthorsOfCommentsUnderPost(postId)
+            const usersDtos = users.map((user)=>this.userFactoryService.createUserDto(user))
+            return usersDtos
+        } catch(error) {
+            return error
+        }
+    }
+
     @Get(':userId')
     async getUserById(@Param('userId') userId: string){
         try{
