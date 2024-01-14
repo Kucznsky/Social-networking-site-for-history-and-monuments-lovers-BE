@@ -11,6 +11,8 @@ import { AuthController } from './controllers/auth/auth.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { ImageUploadModule } from './use_cases/image-upload/image-upload.module';
+import { UploadController } from './controllers/image-upload/upload.controller';
 
 @Module({
   imports: [ 
@@ -20,6 +22,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
     UserUseCaseModule, 
     CommentUseCaseModule, 
     LikeUseCaseModule,
+    ImageUploadModule,
     MailerModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
@@ -36,7 +39,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
       inject: [ConfigService],
     }),
   ],
-  controllers: [AppController, PostController, LikeController, UserController, CommentController, AuthController],
+  controllers: [AppController, PostController, LikeController, UserController, CommentController, AuthController, UploadController],
   providers: [AppService, JwtStrategy],
 })
 export class AppModule {}
