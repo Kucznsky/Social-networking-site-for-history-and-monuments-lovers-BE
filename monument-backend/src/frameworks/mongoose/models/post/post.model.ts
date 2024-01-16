@@ -33,6 +33,15 @@ export class Post {
     @Prop({ default: 0})
     numberOFComments: number;
 
+    @Prop({ required: true})
+    thumbnail: string
+
+    @Prop()
+    modernPictures?: string[]
+
+    @Prop()
+    oldPictures?: string[]
+
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

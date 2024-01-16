@@ -14,7 +14,8 @@ export class Post {
     author: User
     numberOfLikes: number;
     numberOFComments: number;
+    thumbnail: string
 
-    //modernPictures
-    //oldPictures
+    modernPictures?: string[]
+    oldPictures?: string[]
 }

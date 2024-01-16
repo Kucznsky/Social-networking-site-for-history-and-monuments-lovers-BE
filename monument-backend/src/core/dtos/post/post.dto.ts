@@ -20,4 +20,12 @@ export class PostDto {
 
     @IsNotEmpty()
     authorId: any;
+
+    @IsString()
+    @IsNotEmpty()
+    thumbnail: string;
+
+    // oldPicutures?: string[];
+
+    // newPictures?: string[];
 }

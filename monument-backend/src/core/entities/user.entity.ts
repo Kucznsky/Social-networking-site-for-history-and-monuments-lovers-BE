@@ -7,5 +7,5 @@ export class User {
     isAdmin: boolean;
     isActive: boolean;
     passwordHash: string;
-    //profilePicture
+    profilePicture?: string;
 }
