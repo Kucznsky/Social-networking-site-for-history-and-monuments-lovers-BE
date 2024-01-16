@@ -25,7 +25,7 @@ export class PostDto {
     @IsNotEmpty()
     thumbnail: string;
 
-    // oldPicutures?: string[];
+    oldPicutures?: string[];
 
-    // newPictures?: string[];
+    newPictures?: string[];
 }

@@ -13,6 +13,8 @@ export class PostFactoryService {
         post.localisation = postDto.localisation;
         post.published = new Date(Date.now())
         post.thumbnail = postDto.thumbnail
+        post.oldPictures = postDto.oldPicutures ?? [];
+        post.modernPictures = postDto.newPictures ?? []
         return post
     }
 }
