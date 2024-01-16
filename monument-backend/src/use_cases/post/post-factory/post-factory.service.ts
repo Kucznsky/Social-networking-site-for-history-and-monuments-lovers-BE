@@ -12,6 +12,7 @@ export class PostFactoryService {
         post.content = postDto.content;
         post.localisation = postDto.localisation;
         post.published = new Date(Date.now())
+        post.thumbnail = postDto.thumbnail
         return post
     }
 }

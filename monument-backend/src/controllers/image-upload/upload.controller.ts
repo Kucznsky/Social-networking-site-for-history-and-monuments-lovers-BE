@@ -1,4 +1,4 @@
-import { Controller, FileTypeValidator, MaxFileSizeValidator, ParseFilePipe, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, FileTypeValidator, MaxFileSizeValidator, Param, ParseFilePipe, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ImageUploadService } from 'src/use_cases/image-upload/image-upload/image-upload.service';
 
@@ -6,9 +6,9 @@ import { ImageUploadService } from 'src/use_cases/image-upload/image-upload/imag
 export class UploadController {
   constructor(private readonly imageUploadService: ImageUploadService) {}
 
-  @Post('/user-avatar')
+  @Post('/user-avatar/:userId')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadUserAvatar(
+  async uploadUserAvatar(@Param('userId') userId: string,
       @UploadedFile(
         new ParseFilePipe({
           validators: [
@@ -19,7 +19,7 @@ export class UploadController {
       )
       file: Express.Multer.File,
     ) {
-      await this.imageUploadService.uploadFile(file.originalname, file.buffer);
+      await this.imageUploadService.uploadUserAvatar(file.originalname, file.buffer, userId);
     }
 
   @Post('/post-thumbnail')
@@ -35,6 +35,6 @@ export class UploadController {
       )
       file: Express.Multer.File,
     ) {
-      await this.imageUploadService.uploadFile(file.originalname, file.buffer);
+      await this.imageUploadService.uploadPostThumbnail(file.originalname, file.buffer);
     }
 }
