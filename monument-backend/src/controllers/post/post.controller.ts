@@ -24,7 +24,6 @@ export class PostController {
             createdPostResponse.createdPost = createdPost;
             createdPostResponse.success = true;
         } catch (error) {
-            console.log(error)
             createdPostResponse.success = false;
         }
 

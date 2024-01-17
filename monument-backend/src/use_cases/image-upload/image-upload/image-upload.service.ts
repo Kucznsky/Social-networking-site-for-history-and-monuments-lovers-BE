@@ -25,8 +25,15 @@ export class ImageUploadService {
     })
   }
 
-  public async uploadPostThumbnail(fileName: string, file: Buffer) {
-    
+  public async uploadPostThumbnail(originalFileName: string, file: Buffer): Promise<string> {
+    const fileName = `${uuidv4()}-${originalFileName}`
+    const encodedFileName = encodeURIComponent(fileName)
+    try{
+      this.uploadFile(fileName, file)
+    } catch(error){
+      return error
+    }
+    return this.buildUrlToImage(encodedFileName)
   }
   
   private async uploadFile(fileName: string, file: Buffer) {

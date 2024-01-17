@@ -35,6 +35,6 @@ export class UploadController {
       )
       file: Express.Multer.File,
     ) {
-      await this.imageUploadService.uploadPostThumbnail(file.originalname, file.buffer);
+      return await this.imageUploadService.uploadPostThumbnail(file.originalname, file.buffer);
     }
 }
