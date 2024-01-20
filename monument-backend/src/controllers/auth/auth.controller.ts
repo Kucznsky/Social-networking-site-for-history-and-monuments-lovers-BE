@@ -23,6 +23,15 @@ export class AuthController {
         } catch(error){
             console.log(error);
             userLoggingInResponse.success = false;
+            if(error.code === 11000){
+                if(error.message === "There's no user with this email"){
+                    throw new ForbiddenException(`There's no user with this email`);
+                } else if(error.message === 'Incorrect password'){
+                    throw new ForbiddenException('Incorrect password');
+                }
+            } else {
+                throw error;
+            }
         }
         return userLoggingInResponse;
     };
