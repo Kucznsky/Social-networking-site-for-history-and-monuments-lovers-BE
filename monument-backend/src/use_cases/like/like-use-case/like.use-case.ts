@@ -35,6 +35,7 @@ export class LikeUseCase {
         }
         const likedPost =  await this.dataServices.posts.getById(likeDto.postId)
         likedPost.numberOfLikes -= 1
+        this.dataServices.posts.update(likedPost.id, likedPost)
         return this.dataServices.likes.delete(likeToRemove?.id)
     }
 }
