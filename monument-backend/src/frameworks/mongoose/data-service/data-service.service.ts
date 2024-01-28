@@ -9,6 +9,9 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { MongoUserGenericRepository } from '../generic-repositories/mongo-user-generic-repository';
 import { MongoLikeCommentGenericRepository } from '../generic-repositories/mongo-like-comment-generic-repository';
+import { IGenericRepository } from 'src/core/abstracts/generic-repository.abstract';
+import { EmailBlackList } from 'src/core/entities/email-blacklist.entity';
+import { EmailBlackListDocument } from '../models/user/email-blacklist.model';
 
 @Injectable()
 export class DataService implements IDataServices, OnApplicationBootstrap  {
@@ -16,6 +19,7 @@ export class DataService implements IDataServices, OnApplicationBootstrap  {
     posts: MongoGenericRepository<Post>;
     comments: MongoLikeCommentGenericRepository<Comment>;
     likes: MongoLikeCommentGenericRepository<Like>;
+    blacklistedEmails: IGenericRepository<EmailBlackList>;
   
     constructor(
       @InjectModel(Post.name)
@@ -26,6 +30,8 @@ export class DataService implements IDataServices, OnApplicationBootstrap  {
       private CommentRepository: Model<CommentDocument>,
       @InjectModel(Like.name)
       private LikeRepository: Model<LikeDocument>,
+      @InjectModel(EmailBlackList.name)
+      private EmailBlackList: Model<EmailBlackListDocument>,
     ) {}
 
     onApplicationBootstrap() {
@@ -33,5 +39,6 @@ export class DataService implements IDataServices, OnApplicationBootstrap  {
         this.posts = new MongoGenericRepository<Post>(this.PostRepository);
         this.comments = new MongoLikeCommentGenericRepository<Comment>(this.CommentRepository);
         this.likes = new MongoLikeCommentGenericRepository<Like>(this.LikeRepository);
+        this.blacklistedEmails = new MongoGenericRepository<EmailBlackList>(this.EmailBlackList)
       }
 }

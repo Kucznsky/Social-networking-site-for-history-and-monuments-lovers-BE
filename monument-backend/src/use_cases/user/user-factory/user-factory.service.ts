@@ -26,6 +26,8 @@ export class UserFactoryService {
         userDto.isStaff = user.isStaff;
         userDto.isAdmin = user.isAdmin;
         userDto.isActive = user.isActive;
+        userDto.avatar = user.profilePicture
+
         return userDto;
     }
 }

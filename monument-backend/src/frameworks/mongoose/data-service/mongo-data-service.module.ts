@@ -7,6 +7,8 @@ import { Post, PostSchema } from '../models/post/post.model';
 import { User, UserSchema } from '../models/user/user.model';
 import { Comment, CommentSchema } from '../models/comment/comment.model';
 import { Like, LikeSchema } from '../models/like/like.model';
+import { EmailBlackList } from 'src/core/entities/email-blacklist.entity';
+import { EmailBlackListSchema } from '../models/user/email-blacklist.model';
 
 @Module({
   imports: [
@@ -21,6 +23,7 @@ import { Like, LikeSchema } from '../models/like/like.model';
       { name: User.name, schema: UserSchema },
       { name: Comment.name, schema: CommentSchema },
       { name: Like.name, schema: LikeSchema },
+      { name: EmailBlackList.name, schema: EmailBlackListSchema}
     ]),
   ],
     providers: [

@@ -1,7 +1,5 @@
 import { Category } from "../enums/category.enum";
-import { Like } from "./like.entity";
 import { User } from "./user.entity";
-import { Comment } from "./comment.entity";
 
 export class Post {
     id?: string

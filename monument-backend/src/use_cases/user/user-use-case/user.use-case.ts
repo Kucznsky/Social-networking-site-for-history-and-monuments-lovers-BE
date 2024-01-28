@@ -21,6 +21,10 @@ export class UserUseCase {
       ) {}
 
     public async register(user: User): Promise<AccessTokenWrapperDto> {
+        const blacklistedEmails = await this.dataServices.blacklistedEmails.getAll()
+        if(blacklistedEmails.some((emailWrapper)=> emailWrapper.email === user.email)){
+            throw new ForbiddenException(`This email was put on the black list`);
+        }
         try {
             const createdUser = await this.dataServices.users.create(user);
             this.sendEmail(createdUser.id, createdUser.email);
@@ -34,8 +38,13 @@ export class UserUseCase {
     
     public async login(loginDto: LoginDto): Promise<AccessTokenWrapperDto> {
         const user = await this.dataServices.users.getByEmail(loginDto.email);
+        const blacklistedEmails = await this.dataServices.blacklistedEmails.getAll()
         if(!user) {
-            throw new ForbiddenException(`There's no user with this email`); 
+            if(blacklistedEmails.some((emailWrapper)=> emailWrapper.email === loginDto.email)){
+                throw new ForbiddenException(`This account was banned due to violation of the regulations`);
+            } else {
+                throw new ForbiddenException(`There's no user with this email`); 
+            }
         }
         const arePasswordsMatching = await argon.verify(user.passwordHash, loginDto.password);
         if(!arePasswordsMatching){
@@ -67,8 +76,12 @@ export class UserUseCase {
         return users.filter((user)=> comments.some((comment)=> comment.author.toString() === user.id))
     }
 
-    public deleteUser(userId: string) {
-        return this.dataServices.users.delete(userId);
+    public async deleteUser(userId: string) {
+        console.log(userId)
+        const user = await this.dataServices.users.getById(userId);
+        console.log(user)
+        this.dataServices.blacklistedEmails.create({email: user.email})
+        // return this.dataServices.users.delete(userId);
     }
 
     public async updateUserData(userId: string, userDto: UserDto){
