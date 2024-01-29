@@ -9,7 +9,7 @@ export class UploadController {
   constructor(private readonly imageUploadService: ImageUploadService) {}
 
   @Post('/user-avatar/:userId')
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('userAvatar'))
   async uploadUserAvatar(@Param('userId') userId: string,
       @UploadedFile(
         new ParseFilePipe({
