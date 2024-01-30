@@ -26,7 +26,7 @@ export class UploadController {
     }
 
   @Post('/post-thumbnail')
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('thumbnail'))
   async uploadThumbnail(
       @UploadedFile(
         new ParseFilePipe({
