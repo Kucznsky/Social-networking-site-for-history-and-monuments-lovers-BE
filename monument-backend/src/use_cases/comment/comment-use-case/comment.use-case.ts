@@ -29,7 +29,11 @@ export class CommentUseCase {
         return this.dataServices.comments.getByPostId(postId)
     }
 
-    deleteComment(commentId: string) {
+    async deleteComment(commentId: string) {
+        const commentToDelete = await this.dataServices.comments.getById(commentId)
+        const commentedPost =  await this.dataServices.posts.getById(commentToDelete.post.toString())
+        commentedPost.numberOFComments -= 1
+        this.dataServices.posts.update(commentedPost.id, commentedPost)
         return this.dataServices.comments.delete(commentId)
     }
 }

@@ -8,6 +8,7 @@ import { AccessTokenWrapperDto } from "src/core/dtos/auth/access-token-wrapper.d
 import { ConfigService } from "@nestjs/config";
 import { UserDto } from "src/core/dtos/user/user.dto";
 import { MailerService } from "@nestjs-modules/mailer";
+import { use } from "passport";
 
 
 @Injectable()
@@ -77,11 +78,35 @@ export class UserUseCase {
     }
 
     public async deleteUser(userId: string) {
-        console.log(userId)
         const user = await this.dataServices.users.getById(userId);
-        console.log(user)
+        const likes = await this.dataServices.likes.getAll();
+        const comments = await this.dataServices.comments.getAll();
+        const posts = await this.dataServices.posts.getAll();
         this.dataServices.blacklistedEmails.create({email: user.email})
-        // return this.dataServices.users.delete(userId);
+        posts.forEach((post)=>{
+            if(post.author.toString() === user.id){
+                this.dataServices.posts.delete(post.id)
+            }
+        })
+        likes.forEach(async(like)=> {
+            if(like.user.toString() === user.id){
+                const relatedPost = await this.dataServices.posts.getById(like.post.toString())
+                relatedPost.numberOfLikes -= 1
+                this.dataServices.posts.update(relatedPost.id, relatedPost)
+                this.dataServices.likes.delete(like.id)
+            }
+        })
+        comments.forEach(async(comment)=> {
+            if(comment.author.toString() === user.id){
+                const relatedPost = await this.dataServices.posts.getById(comment.post.toString())
+                console.log(relatedPost)
+                relatedPost.numberOFComments -= 1
+                this.dataServices.posts.update(relatedPost.id, relatedPost)
+                this.dataServices.comments.delete(comment.id)
+            }
+        })
+
+        return this.dataServices.users.delete(userId);
     }
 
     public async updateUserData(userId: string, userDto: UserDto){
