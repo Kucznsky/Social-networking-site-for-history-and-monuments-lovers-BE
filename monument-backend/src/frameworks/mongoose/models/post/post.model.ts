@@ -2,8 +2,7 @@ import { Category } from "src/core/enums/category.enum";
 import { User } from "../user/user.model";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import mongoose from "mongoose";
-import { Like } from "../like/like.model";
-import { Comment } from "../comment/comment.model";
+import { Localisation } from "src/core/entities/localisation.entity";
 
 export type PostDocument = Post & Document;
 
@@ -19,7 +18,7 @@ export class Post {
     content: string;
 
     @Prop({ required: true})
-    localisation: string;
+    localisation: Localisation;
 
     @Prop({ default: Date.now})
     published: Date;

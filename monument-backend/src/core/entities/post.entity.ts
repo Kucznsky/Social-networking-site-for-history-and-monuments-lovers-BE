@@ -1,4 +1,5 @@
 import { Category } from "../enums/category.enum";
+import { Localisation } from "./localisation.entity";
 import { User } from "./user.entity";
 
 export class Post {
@@ -6,8 +7,7 @@ export class Post {
     category: Category;
     title: string;
     content: string;
-    //For now localisation coordinates are string but maybe later I'll make a class for that
-    localisation: string;
+    localisation: Localisation;
     published: Date;
     author: User
     numberOfLikes: number;

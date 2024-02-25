@@ -1,5 +1,6 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 import { Category } from 'src/core/enums/category.enum';
+import { LocalisationDto } from './localistation.dto';
 
 export class PostDto {
     @IsString()
@@ -14,9 +15,8 @@ export class PostDto {
     @IsNotEmpty()
     content: string;
 
-    @IsString()
     @IsNotEmpty()
-    localisation: string;
+    localisation: LocalisationDto;
 
     @IsNotEmpty()
     authorId: any;
