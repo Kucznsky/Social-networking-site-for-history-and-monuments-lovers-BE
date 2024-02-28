@@ -13,7 +13,6 @@ export class UserFactoryService {
         user.isAdmin = false;
         user.isActive = false;
         user.passwordHash = hash;
-        //profilePicture
         return user
     }
 

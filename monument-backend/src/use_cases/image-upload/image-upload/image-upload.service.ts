@@ -15,17 +15,12 @@ export class ImageUploadService {
 
   public async uploadUserAvatar(originalFileName: string, file: Buffer, userId: string) {
     const user = await this.dataService.users.getById(userId)
-    // let previousUserAvatar: string;
-    // previousUserAvatar = user?.profilePicture
     const fileName = `${uuidv4()}-${originalFileName}`
     const encodedFileName = encodeURIComponent(fileName)
     this.uploadFile(fileName, file).then((resoponse)=>{
       if(resoponse.$metadata.httpStatusCode === 200){
         user.profilePicture = this.buildUrlToImage(encodedFileName)
         this.dataService.users.update(userId, user)
-        // if(previousUserAvatar){
-        //   this.removeFile(previousUserAvatar)
-        // }
       }
     })
   }
@@ -50,20 +45,6 @@ export class ImageUploadService {
           }),
       );
   }
-
-  // private async removeFile(fileName: string) {
-  //   const command = new DeleteObjectCommand({
-  //     Bucket: this.configService.get('BUCKET_NAME'),
-  //     Key: 'b5ae5aa6-c478-42a1-8d5d-000938d6a395-d90.jpg',
-  //   });
-  
-  //   try {
-  //     const response = await this.s3Client.send(command);
-  //     console.log(response);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // }
 
   private buildUrlToImage(fileName: string): string {
     return `https://${this.configService.get('BUCKET_NAME')}.s3.${this.configService.get('AWS_S3_REGION')}.amazonaws.com/${fileName}`

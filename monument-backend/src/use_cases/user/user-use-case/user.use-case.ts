@@ -99,7 +99,6 @@ export class UserUseCase {
         comments.forEach(async(comment)=> {
             if(comment.author.toString() === user.id){
                 const relatedPost = await this.dataServices.posts.getById(comment.post.toString())
-                console.log(relatedPost)
                 relatedPost.numberOFComments -= 1
                 this.dataServices.posts.update(relatedPost.id, relatedPost)
                 this.dataServices.comments.delete(comment.id)
@@ -123,7 +122,7 @@ export class UserUseCase {
 
     private signToken(userId: string, email: string): Promise<string>{
         const payload = { sub: userId, email: email };
-        const options = { expiresIn: '7d', secret: this.config.get('JWT_SECRET')}; //just for debug purposes, later expiresIn needs to be changed later to the smaller value
+        const options = { expiresIn: '1h', secret: this.config.get('JWT_SECRET')}; 
         
         return this.jwtService.signAsync(payload, options)
     }

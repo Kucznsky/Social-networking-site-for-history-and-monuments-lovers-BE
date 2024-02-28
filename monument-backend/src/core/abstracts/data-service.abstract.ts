@@ -8,13 +8,9 @@ import { IUserGenericRepository } from "./user-generic-repository.abstract";
 import { ILikeCommentGenericRepository } from "./like-comment-generic-repository.abstract";
 
 export abstract class IDataServices {
-    abstract users: IUserGenericRepository<User>;
-  
-    abstract posts: IGenericRepository<Post>;
-  
-    abstract comments: ILikeCommentGenericRepository<Comment>;
-
-    abstract likes: ILikeCommentGenericRepository<Like>
-
-    abstract blacklistedEmails: IGenericRepository<EmailBlackList>
-  }
+  abstract users: IUserGenericRepository<User>;
+  abstract posts: IGenericRepository<Post>;
+  abstract comments: ILikeCommentGenericRepository<Comment>;
+  abstract likes: ILikeCommentGenericRepository<Like>
+  abstract blacklistedEmails: IGenericRepository<EmailBlackList>
+}

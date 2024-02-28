@@ -21,7 +21,6 @@ export class UploadController {
       )
       file: Express.Multer.File,
     ) {
-      console.log(file)
       await this.imageUploadService.uploadUserAvatar(file.originalname, file.buffer, userId);
     }
 
