@@ -30,6 +30,7 @@
     "@nestjs/mongoose": "^10.0.1",
     "@nestjs/passport": "^10.0.2",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/swagger": "^7.4.2",
     "argon2": "^0.31.2",
     "aws-sdk": "^2.1536.0",
     "class-transformer": "^0.5.1",

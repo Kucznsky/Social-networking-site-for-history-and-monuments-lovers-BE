@@ -82,12 +82,8 @@ export class UserUseCase {
         const likes = await this.dataServices.likes.getAll();
         const comments = await this.dataServices.comments.getAll();
         const posts = await this.dataServices.posts.getAll();
-        this.dataServices.blacklistedEmails.create({email: user.email})
-        posts.forEach((post)=>{
-            if(post.author.toString() === user.id){
-                this.dataServices.posts.delete(post.id)
-            }
-        })
+        //TODO fix later
+        // this.dataServices.blacklistedEmails.create({email: user.email})
         likes.forEach(async(like)=> {
             if(like.user.toString() === user.id){
                 const relatedPost = await this.dataServices.posts.getById(like.post.toString())
@@ -98,10 +94,17 @@ export class UserUseCase {
         })
         comments.forEach(async(comment)=> {
             if(comment.author.toString() === user.id){
+                console.log(comment.post)
                 const relatedPost = await this.dataServices.posts.getById(comment.post.toString())
+                console.log(relatedPost)
                 relatedPost.numberOFComments -= 1
                 this.dataServices.posts.update(relatedPost.id, relatedPost)
                 this.dataServices.comments.delete(comment.id)
+            }
+        })
+        posts.forEach((post)=>{
+            if(post.author.toString() === user.id){
+                this.dataServices.posts.delete(post.id)
             }
         })
 
